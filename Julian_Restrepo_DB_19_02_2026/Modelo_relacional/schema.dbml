@@ -1,0 +1,48 @@
+Table cliente {
+  id_cliente int [pk]
+  nit varchar
+  primer_nombre varchar
+  segundo_nombre varchar
+  primer_apellido varchar
+  segundo_apellido varchar
+  direccion_cliente varchar
+  telefono varchar
+  mail varchar
+}
+
+Table sucursal {
+  id_sucursal int [pk]
+  nombre varchar
+  direccion_sucursal varchar
+  ciudad varchar
+}
+
+Table cuenta {
+  id_cuenta int [pk]
+  saldo decimal
+  tipo_cuenta varchar
+  fecha_apertura date
+  id_sucursal int [not null]
+}
+
+Table operacion {
+  codigo_operacion int [pk]
+  fecha date
+  valor decimal
+  tipo_operacion varchar
+  id_cuenta int [not null]
+}
+
+Table cliente_cuenta {
+  id_cliente int [not null]
+  id_cuenta int [not null]
+
+  indexes {
+    (id_cliente, id_cuenta) [pk]
+  }
+}
+
+Ref: cuenta.id_sucursal > sucursal.id_sucursal
+Ref: operacion.id_cuenta > cuenta.id_cuenta
+Ref: cliente_cuenta.id_cliente > cliente.id_cliente
+Ref: cliente_cuenta.id_cuenta > cuenta.id_cuenta
